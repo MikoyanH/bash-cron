@@ -1,0 +1,1 @@
+0 8 * * * logwatch --detail High --mailto mikoyan2024@mail.ru --output mail --service sshd --service ftpd --service rdp --range yesterday --configfile /etc/logwatch_config.conf

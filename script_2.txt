@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+backup_dirs=("/home" "/var/log")
+config_files=("/etc/ssh_config" "/etc/rdp_config" "/etc/ftp_config")
+
+backup="/archive"
+
+backup_name="backup_$(date +'%Y%m%d_%H%M%S').tar.gz"
+
+tar -czvf "$backup/$backup_name" "${backup_dirs[@]}" "${config_files[@]}"
+
+
+
+# Добавление задачи в cron.
+
+crontab -e 
+
+30 18 * * 5 /etc/backup.sh

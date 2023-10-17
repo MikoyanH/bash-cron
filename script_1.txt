@@ -1,0 +1,59 @@
+#!/bin/bash
+
+
+# 1. Проверка на наличие репозитория Backports в списке репозиториев. Если отсутствует — добавляем (под используемый вами дистрибутив).
+
+
+if grep -q "deb http://archive.ubuntu.com/ubuntu backports" /etc/apt/sources.list; then
+	  echo "Репозиторий Backports уже добавлен."
+
+else
+     "deb http://archive.ubuntu.com/ubuntu backports" | sudo tee -a /etc/apt/sources.list
+fi
+
+
+# 2. Обновление пакетного менеджера.
+
+sudo apt update
+
+# 3. Установка и запуск Apache2.
+
+sudo apt install apache2
+sudo systemctl start apache2
+
+# 4. Установка Python.
+
+sudo apt install python
+
+# 5. Установка и поднятие SSH-сервера.
+
+sudo apt install openssh-server
+sudo systemctl status ssh
+
+# 6. Отображение активных SSH-соединений.
+
+netstat -tn | grep :22
+
+# 7. Создание нового пользователя и выдача прав.
+
+sudo adduser Worker
+sudo chmod u+xrw /var/www/html
+
+# 8. Запрос информации в Google.
+
+echo "Введите запрос для поиска в Google:"
+read query
+
+url="https://www.google.com/search?q=$(echo $query | sed 's/ /+/g')"
+
+curl -s "$url"
+
+# 9. Синхронизирование времени.
+
+sudo apt install ntp
+sudo service ntp start
+
+# 10. Открыть Youtube.
+
+xdg-open "https://www.youtube.com"
+
